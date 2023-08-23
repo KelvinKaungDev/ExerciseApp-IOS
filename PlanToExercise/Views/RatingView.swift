@@ -1,20 +1,25 @@
-//
-//  RatingView.swift
-//  PlanToExercise
-//
-//  Created by Kelvin Gao  on 16/8/2566 BE.
-//
-
 import SwiftUI
 
 struct RatingView: View {
+    @Binding var rating : Int
+    let maxRating : Int = 5
+    let onColor = Color.red
+    let offColor = Color.gray
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-struct RatingView_Previews: PreviewProvider {
-    static var previews: some View {
-        RatingView()
+        HStack {
+          ForEach(1 ..< (maxRating + 1)) { index in
+            Image(systemName: "waveform.path.ecg")
+              .foregroundColor(
+                index > rating ? offColor : onColor
+              )
+              .onTapGesture {
+                  print("rating \(rating)")
+                  rating = index
+                  print(index)
+                  print("rating \(rating)")
+              }
+        }
+        }.font(.largeTitle)
     }
 }

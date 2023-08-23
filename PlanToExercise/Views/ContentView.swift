@@ -1,19 +1,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedTab = 9
+    @State var showHistory : Bool = false
+    
     var body: some View {
         VStack {
-            TabView {
-                Text("Welcome")
-                    .tabItem { Text("Welcome") }
-                Text("Exercise")
-                    .tabItem { Text("Exercise 1") }
-                Text("Exercise")
-                    .tabItem { Text("Exercise 2") }
+            TabView(selection: $selectedTab) {
+                WelcomeView(selectedTab: $selectedTab, showHistory: $showHistory)
+                ForEach(0 ..< 4) { index in
+                    ExerciseView(selectedTab: $selectedTab, showHistory: $showHistory, index: index)
+                }
             }
-            .tabViewStyle(PageTabViewStyle())
-            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+            .environmentObject(HistoryStore())
         }
+        
         .padding()
     }
 }

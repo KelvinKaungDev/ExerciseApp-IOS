@@ -8,13 +8,32 @@
 import SwiftUI
 
 struct HeaderView: View {
+    @Binding var selectedTab : Int
+    let titleText : String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text(titleText)
+                .font(.largeTitle)
+            HStack {
+                ForEach(0..<Exercise.exercises.count, id : \.self) { index in
+                    let imageFill = index == selectedTab ? ".fill" : ""
+                    Image(systemName: "\(index + 1).circle\(imageFill)")
+                        .onTapGesture {
+                            selectedTab = index
+                        }
+                }
+            }
+            .font(.title2)
+        }
     }
 }
 
 struct HeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        HeaderView()
+        Group {
+            HeaderView(selectedTab: .constant(1), titleText: "Squat")
+            .previewLayout(.sizeThatFits)
+        }
     }
 }
